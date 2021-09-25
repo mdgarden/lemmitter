@@ -7,6 +7,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
+import Tweet from "./Tweet";
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -59,14 +60,13 @@ const Home = ({ userObj }) => {
         />
         <input type="submit" value="tweet" />
       </form>
-      <div>
-        {tweets.map((tweet) => (
-          <div key={tweet.id}>
-            <h4>{tweet.text}</h4>
-            <p>{tweet.createdAt}</p>
-          </div>
-        ))}
-      </div>
+      {tweets.map((tweet) => (
+        <Tweet
+          key={tweet.id}
+          tweetObj={tweet}
+          isOwner={tweet.creatorId === userObj.uid}
+        />
+      ))}
     </div>
   );
 };

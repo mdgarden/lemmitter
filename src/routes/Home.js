@@ -48,6 +48,16 @@ const Home = ({ userObj }) => {
     setTweet(value);
   };
 
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {};
+    reader.readAsDataURL(theFile);
+  };
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -58,6 +68,7 @@ const Home = ({ userObj }) => {
           placeholder="무슨 일이 일어나고 있나요?"
           maxLength={120}
         />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="tweet" />
       </form>
       {tweets.map((tweet) => (

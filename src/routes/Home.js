@@ -26,7 +26,7 @@ const Home = ({ userObj }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     let attachmentUrl = "";
-    if (attachment != "") {
+    if (attachment !== "") {
       const attachmentRef = storageService
         .ref()
         .child(`${userObj.uid}/${uuidv4()}`);
@@ -42,19 +42,6 @@ const Home = ({ userObj }) => {
     await addDoc(collection(dbService, tweetObj));
     setTweet("");
     setAttachment("");
-
-    // try {
-    //   const docRef = await addDoc(collection(dbService, "tweets"), {
-    //     text: tweet,
-    //     createdAt: Date.now(),
-    //     creatorId: userObj.uid,
-    //   });
-    //   console.log("Document written with ID:", docRef.id);
-    // } catch (error) {
-    //   console.error("Error adding document:", error);
-    // }
-
-    // setTweet("");
   };
   const onChange = (event) => {
     const {

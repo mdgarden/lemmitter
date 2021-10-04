@@ -7,60 +7,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import AuthForm from "components/AuthForm";
 
 const Auth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [newAccount, setNewAccount] = useState(true);
-  const [error, setError] = useState("");
-
-  const onChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    if (name === "email") {
-      setEmail(value);
-    } else if (name === "password") {
-      setPassword(value);
-    }
-  };
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (newAccount) {
-      createUserWithEmailAndPassword(authService, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          // ...
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-          console.log(errorCode);
-          console.log(errorMessage);
-          setError(error.message);
-        });
-    } else {
-      signInWithEmailAndPassword(authService, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          // ...
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode);
-          console.log(errorMessage);
-          setError(error.message);
-        });
-    }
-  };
-
-  const toggleAccount = () => setNewAccount((prev) => !prev);
   const onSocialClick = async (event) => {
     const {
       target: { name },
@@ -71,37 +20,11 @@ const Auth = () => {
     } else if (name === "github") {
       provider = new GithubAuthProvider();
     }
-    const data = await signInWithPopup(authService, provider);
-    console.log(data);
+    await authService.signInWithPopup(provider);
   };
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <input
-          name="email"
-          type="text"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={onChange}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          value={password}
-          onChange={onChange}
-        />
-        <input
-          type="submit"
-          value={newAccount ? "Create Account" : "Sign In"}
-        />
-        {error}
-      </form>
-      <span onClick={toggleAccount}>
-        {newAccount ? "Sign In" : "Create Account"}
-      </span>
+      <AuthForm />
       <div>
         <button onClick={onSocialClick} name="google">
           Continue with Google

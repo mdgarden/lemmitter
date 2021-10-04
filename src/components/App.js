@@ -15,6 +15,8 @@ function App() {
           uid: user.uid,
           updateProfile: (args) => updateProfile(args),
         });
+      } else {
+        setUserObj(null);
       }
       setInit(true);
     });

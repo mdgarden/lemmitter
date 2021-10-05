@@ -8,7 +8,7 @@ function App() {
   const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged((user) => {
+    onAuthStateChanged(authService, (user) => {
       if (user) {
         setUserObj({
           displayName: user.displayName,

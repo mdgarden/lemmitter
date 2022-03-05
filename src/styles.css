@@ -32,6 +32,10 @@ form {
   width: 100%;
 }
 
+footer {
+  text-align: center;
+}
+
 .tweet-input::placeholder {
   color: white;
   opacity: 0.9;
